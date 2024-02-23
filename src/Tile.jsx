@@ -1,18 +1,16 @@
 import PropTypes from "prop-types";
-import { PlayScreen } from "./Screens";
 export function Tile({ content: Content, flip, state }) {
   switch (state) {
     case "start":
       return (
-        <PlayScreen
-          className="inline-block h-16 w-16
-          md:w-20 md:h-20  bg-blue-300 text-center cursor-pointer rounded-md"
+        <Back
+          className="inline-block h-16 w-16 md:h-20 md:w-20 bg-blue-300 cursor-pointer rounded-md"
           flip={flip}
         />
       );
     case "flipped":
       return (
-        <Front className="inline-block h-16 md:h-20 w-16 md:w-20 bg-blue-500">
+        <Front className="inline-block h-16 w-16 md:h-20 md:w-20 bg-blue-500 ">
           <Content
             style={{
               display: "inline-block",
@@ -25,7 +23,7 @@ export function Tile({ content: Content, flip, state }) {
       );
     case "matched":
       return (
-        <Matched className="inline-block h-16 md:h-20  w-16 md:w-20 text-gray-300">
+        <Matched className="inline-block h-12 w-12 md:h-20 md:w-20 text-gray-300">
           <Content
             style={{
               display: "inline-block",
@@ -40,6 +38,7 @@ export function Tile({ content: Content, flip, state }) {
       throw new Error("Invalid state " + state);
   }
 }
+
 Tile.propTypes = {
   content: PropTypes.elementType.isRequired,
   flip: PropTypes.func.isRequired,
@@ -47,7 +46,7 @@ Tile.propTypes = {
 };
 
 function Back({ className, flip }) {
-  return <div onClick={flip} className={className}></div>;
+  return <div onClick={flip} className={`${className} cursor-pointer`}></div>;
 }
 Back.propTypes = {
   className: PropTypes.string,
@@ -57,6 +56,7 @@ Back.propTypes = {
 function Front({ className, children }) {
   return <div className={className}>{children}</div>;
 }
+
 Front.propTypes = {
   className: PropTypes.string,
   children: PropTypes.node.isRequired,
