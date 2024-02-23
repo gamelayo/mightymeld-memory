@@ -2,8 +2,9 @@ import { useState } from "react";
 import confetti from "canvas-confetti";
 import * as icons from "react-icons/gi";
 import { Tile } from "./Tile";
+import PropTypes from "prop-types";
 
-export const possibleTileContents = [
+const possibleTileContents = [
   icons.GiHearts,
   icons.GiWaterDrop,
   icons.GiDiceSixFacesFive,
@@ -18,13 +19,27 @@ export const possibleTileContents = [
 
 export function StartScreen({ start }) {
   return (
-    <div>
-      <button onClick={start} className="bg-gray-400 text-white p-3">
-        Play
-      </button>
+    <div className="flex justify-center items-center h-[100vh]">
+      <div className="w-[80vw] h-[80vh] text-pink-500 bg-pink-100 rounded-lg">
+        <div className="mt-24 text-center">
+          <h1 className="p-3 font-bold text-3xl">Memory</h1>
+          <p className="p-3">Flip over tiles looking for pairs</p>
+        </div>
+        <div className="py-10 text-center">
+          <button
+            onClick={start}
+            className="bg-pink-500 text-white p-3 w-[10rem] rounded-full font-bold"
+          >
+            Play
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
+StartScreen.propTypes = {
+  start: PropTypes.func.isRequired,
+};
 
 export function PlayScreen({ end }) {
   const [tiles, setTiles] = useState(null);
@@ -108,13 +123,22 @@ export function PlayScreen({ end }) {
   };
 
   return (
-    <>
-      <div>
-        {getTiles(6).map((tile, i) => (
+    <div className="w-[100vw] h-[100vh] flex flex-col justify-center items-center">
+      <div className="flex gap-3 pb-8 text-blue-500 text-xl font-semibold">
+        <h1>Tries</h1>
+        <span className="px-2 bg-blue-100"> {tryCount}</span>
+      </div>
+      <div
+        className="text-white p-3 grid grid-cols-4 gap-4 w-[330px] md:w-[390px]
+      bg-blue-100 rounded-lg"
+      >
+        {getTiles(16).map((tile, i) => (
           <Tile key={i} flip={() => flip(i)} {...tile} />
         ))}
       </div>
-      {tryCount}
-    </>
+    </div>
   );
 }
+PlayScreen.propTypes = {
+  end: PropTypes.func.isRequired,
+};
